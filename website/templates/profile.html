@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="profile-card">
+
+        <div class="profile-image">
+
+            {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}" alt="Profile Photo">
+            {% else %}
+                <i class="fas fa-user"></i>
+            {% endif %}
+
+        </div>
+
+        <h2>{{ user.name }}</h2>
+
+        <p>{{ user.status }}</p>
+
+        <a href="{% url 'edit_profile' %}">
+    <button>Edit Profile</button>
+</a>
+
+<button class="delete-btn"
+        onclick="showDeleteAccountPopup()">
+    Delete Account
+</button>
+
+        <br><br>
+
+        <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+
+    </div>
+
+</div>
+<!-- Delete Account Popup -->
+
+<div id="deleteAccountPopup" class="popup">
+
+    <div class="popup-box">
+
+        <h3>Delete Account</h3>
+
+        <p>
+            Are you sure you want to permanently delete your account?
+        </p>
+
+        <div class="popup-buttons">
+
+            <button class="cancel-btn"
+        onclick="hideDeleteAccountPopup()">
+    Cancel
+</button>
+
+            <form method="POST"
+                  action="{% url 'delete_account' %}">
+
+                {% csrf_token %}
+
+                <button type="submit" class="delete-btn">
+                    Delete
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function showDeleteAccountPopup(){
+    document.getElementById("deleteAccountPopup").style.display="flex";
+}
+
+function hideDeleteAccountPopup(){
+    document.getElementById("deleteAccountPopup").style.display="none";
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Watering Reminder</title>
+
+    <link rel="stylesheet" href="{% static 'css/watering.css' %}">
+</head>
+<body>
+
+<header>
+    <h1>💧 Plant Watering Reminder</h1>
+    <p>Set watering reminders for any plant in your home or garden.</p>
+</header>
+
+<section class="container">
+
+    <!-- Add Reminder -->
+    <div class="form-box">
+
+        <h2>➕ Add Watering Reminder</h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+            <input type="hidden"
+       name="reminder_id"
+       value="{% if reminder %}{{ reminder.id }}{% endif %}">
+
+            <label>🌿 Plant Name</label>
+           <input type="text"
+       name="plant_name"
+       placeholder="Enter plant name"
+       value="{% if reminder %}{{ reminder.plant_name }}{% endif %}"
+       required>
+
+            <label>💧 Water Every</label>
+
+            <select name="repeat" required>
+
+    <option value="">Select Repeat</option>
+
+    <option value="Daily" {% if reminder and reminder.repeat == "Daily" %}selected{% endif %}>
+        Daily
+    </option>
+
+    <option value="Weekly" {% if reminder and reminder.repeat == "Weekly" %}selected{% endif %}>
+        Weekly
+    </option>
+
+    <option value="Monthly" {% if reminder and reminder.repeat == "Monthly" %}selected{% endif %}>
+        Monthly
+    </option>
+
+    <option value="Doesn't Repeat" {% if reminder and reminder.repeat == "Doesn't Repeat" %}selected{% endif %}>
+        Doesn't Repeat
+    </option>
+
+</select>
+
+            <label>📅 Watering Date</label>
+
+            <input type="date"
+       name="watering_date"
+       value="{% if reminder %}{{ reminder.watering_date|date:'Y-m-d' }}{% endif %}"
+       required>
+
+<label>⏰ Reminder Time</label>
+
+<input type="time"
+       name="watering_time"
+       value="{% if reminder %}{{ reminder.watering_time|time:'H:i' }}{% endif %}"
+       required>
+
+            <button type="submit">
+    {% if reminder %}
+        💾 Update Reminder
+    {% else %}
+        💧 Save Reminder
+    {% endif %}
+</button>
+
+        </form>
+
+    </div>
+
+    <!-- Reminder List -->
+    <div class="list-box">
+
+        <h2>🌱 My Watering Reminders</h2>
+
+        {% if reminders %}
+
+            {% for reminder in reminders %}
+
+            <div class="reminder-card">
+
+                <h3>🌿 {{ reminder.plant_name }}</h3>
+
+                <p>
+                    <strong>🔁 Repeat:</strong>
+{{ reminder.repeat }}
+                </p>
+
+                <p>
+                    <strong>📅 Date:</strong>
+{{ reminder.watering_date }}
+
+<br>
+
+<strong>⏰ Time:</strong>
+{{ reminder.watering_time }}
+                </p>
+
+                <div class="buttons">
+
+                    <a href="{% url 'watering' %}?edit={{ reminder.id }}" class="edit-btn">
+    ✏ Edit
+</a>
+
+                    <a href="{% url 'delete_watering' reminder.id %}"
+   class="delete-btn"
+   onclick="return confirm('Are you sure you want to delete this reminder?')">
+    🗑 Delete
+</a>
+
+                    <a href="{% url 'mark_watered' reminder.id %}"
+   class="watered-btn"
+   onclick="return confirm('Mark this plant as watered?')">
+    ✅ Watered
+</a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+        <div class="empty-box">
+
+            <h3>No Watering Reminders Yet</h3>
+
+            <p>
+                Add your first plant watering reminder using the form.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+<div style="text-align:center; margin:30px 0;">
+
+    <a href="{% url 'dashboard' %}" class="dashboard-btn">
+        ⬅ Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

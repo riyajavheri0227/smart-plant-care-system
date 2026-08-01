@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Plant Disease Scanner</title>
+
+    
+    <link rel="stylesheet" href="{% static 'css/aiscan.css' %}">
+</head>
+
+<body>
+
+<header>
+
+    <h1>🌿 AI Plant Scanner</h1>
+
+    <p>
+        Upload a clear image of any plant leaf and let AI identify
+        its name and provide basic care Information.
+    </p>
+
+</header>
+
+<section class="container">
+
+    <div class="upload-box">
+
+        <h2>Upload Plant Image</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+        <input type="file" id="plantImage" name="plantImage" accept="image/*" required>
+
+        <button type="submit">📷 Scan Plant</button>
+        </form>
+
+    </div>
+
+    <div class="preview-box">
+
+        <h2>Image Preview</h2>
+
+        <div class="preview">
+    <img id="previewImage" src="" alt="Preview" style="display:none;">
+    <p id="previewText">No Image Selected</p>
+</div>
+
+    </div>
+
+</section>
+
+<section class="result">
+
+    <h2>AI Detection Result</h2>
+
+    <div class="result-card">
+        {% if limit_reached %}
+
+<h3>🚫 Free AI Scan Limit Reached</h3>
+
+<p>
+You have used all 5 free AI scans.
+Please Login or Register to continue using unlimited AI scans.
+</p>
+
+<br>
+
+<a href="{% url 'login' %}" class="details-btn">
+    🔑 Login
+</a>
+
+<a href="{% url 'register' %}" class="details-btn" style="margin-left:10px;">
+    📝 Register
+</a>
+{% elif daily_limit_reached %}
+
+<h3>🚫 Daily AI Scan Limit Reached</h3>
+
+<p>
+You have used all 20 AI scans for today.
+Please come back tomorrow to continue scanning your plants.
+</p>
+{% elif api_error %}
+
+<h3>⚠️ AI Scan Unavailable</h3>
+
+<p>
+AI Scan is currently unavailable.
+Please try again later.
+</p>
+
+{% elif plant_data %}
+
+
+
+<h3>🌿 Plant Name</h3>
+<p>{{ plant_data.name }}</p>
+
+<h3>📊 Accuracy</h3>
+<p>{{ plant_data.confidence }}%</p>
+{% if plant_data.low_confidence %}
+<p class="low-confidence">⚠️ Low Confidence</p>
+<p class="confidence-message">Please upload a clearer photo.</p>
+{% else %}
+<p class="high-confidence">✅ High Confidence</p>
+{% endif %}
+
+{% if plant_data.watering %}
+
+<h3>💧 Watering</h3>
+<p>{{ plant_data.watering }}</p>
+
+<h3>☀️ Sunlight</h3>
+<p>{{ plant_data.sunlight }}</p>
+
+<h3>🌱 Soil</h3>
+<p>{{ plant_data.soil }}</p>
+
+<h3>🧪 Fertilizer</h3>
+<p>{{ plant_data.fertilizer }}</p>
+
+<h3>📝 Description</h3>
+{% if plant_data.description %}
+<p>{{ plant_data.description }}</p>
+{% else %}
+<p>Care information for this plant is not available in the database yet.</p>
+{% endif %}
+
+<a href="/{{ plant_data.page }}/" class="details-btn">
+    📖 View Full Details
+</a>
+
+{% else %}
+
+<p><strong>Care information is not available for this plant yet.</strong></p>
+
+{% endif %}
+
+{% else %}
+
+<h3>🌿 Plant Result</h3>
+<p>Upload a plant image to identify your plant.</p>
+
+{% endif %}
+
+</div>
+
+</section>
+
+{% if request.session.username %}
+
+<div style="text-align:center; margin:30px 0;">
+
+    <a href="{% url 'dashboard' %}" class="dashboard-btn">
+        ⬅ Back to Dashboard
+    </a>
+
+</div>
+
+{% endif %}
+
+<section class="tips">
+
+<h2>Plant Care Tips</h2>
+
+<div class="tip-card">
+💧 Water according to plant needs.
+</div>
+
+<div class="tip-card">
+☀ Keep the plant in proper sunlight.
+</div>
+
+<div class="tip-card">
+🌱 Use organic fertilizer every month.
+</div>
+
+<div class="tip-card">
+🪴 Remove infected leaves immediately.
+</div>
+
+</section>
+
+
+<script>
+const input = document.getElementById("plantImage");
+const previewImage = document.getElementById("previewImage");
+const previewText = document.getElementById("previewText");
+
+input.addEventListener("change", function () {
+    alert("Image selected!");
+
+    const file = this.files[0];
+
+    if (file) {
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.style.display = "block";
+        previewText.style.display = "none";
+    }
+});
+</script>
+
+</body>
+</html>

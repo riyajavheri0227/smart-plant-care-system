@@ -1,0 +1,232 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#eef7ee;
+}
+
+/* Header */
+
+header{
+    background:#2e7d32;
+    color:white;
+    text-align:center;
+    padding:50px 20px;
+}
+
+header h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:18px;
+}
+
+/* Main Container */
+
+.container{
+    width:90%;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+/* Boxes */
+
+.form-box,
+.list-box{
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+
+    height: 700px;      /* You can change this to 650px or 750px */
+    overflow-y: auto;   /* Scroll only inside this box */
+}
+
+.form-box h2,
+.list-box h2{
+    color:#2e7d32;
+    margin-bottom:25px;
+}
+
+/* Form */
+
+label{
+    display:block;
+    margin-top:18px;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#333;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border:2px solid #2e7d32;
+}
+
+/* Button */
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:#2e7d32;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1b5e20;
+}
+
+/* Reminder Card */
+
+.reminder-card{
+    background:#f8fff8;
+    border-left:6px solid #2e7d32;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 5px 12px rgba(0,0,0,.08);
+}
+
+.reminder-card h3{
+    color:#2e7d32;
+    margin-bottom:10px;
+}
+
+.reminder-card p{
+    margin:8px 0;
+    font-size:16px;
+}
+
+/* Buttons */
+
+.buttons{
+    margin-top:18px;
+}
+
+.buttons a{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    padding:10px 18px;
+    border-radius:6px;
+    margin-right:10px;
+    margin-top:10px;
+    font-size:15px;
+    transition:.3s;
+}
+
+.edit-btn{
+    background:#1976d2;
+}
+
+.edit-btn:hover{
+    background:#125ea8;
+}
+
+.delete-btn{
+    background:#d32f2f;
+}
+
+.delete-btn:hover{
+    background:#b71c1c;
+}
+
+.watered-btn{
+    background:#2e7d32;
+}
+
+.watered-btn:hover{
+    background:#1b5e20;
+}
+ 
+/* Empty Box */
+
+.empty-box{
+    text-align:center;
+    padding:50px 20px;
+    border:2px dashed #bbb;
+    border-radius:10px;
+}
+
+.empty-box h3{
+    color:#2e7d32;
+    margin-bottom:15px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.container{
+    grid-template-columns:1fr;
+}
+
+header h1{
+    font-size:32px;
+}
+
+.buttons a{
+    display:block;
+    text-align:center;
+    margin-right:0;
+}
+
+}
+
+.dashboard-btn{
+    display:inline-block;
+    background:#2e7d32;
+    color:white;
+    text-decoration:none;
+    padding:12px 24px;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.dashboard-btn:hover{
+    background:#1b5e20;
+}
+
+.list-box::-webkit-scrollbar{
+    width:8px;
+}
+
+.list-box::-webkit-scrollbar-track{
+    background:#e8f5e9;
+    border-radius:10px;
+}
+
+.list-box::-webkit-scrollbar-thumb{
+    background:#2e7d32;
+    border-radius:10px;
+}
+
+.list-box::-webkit-scrollbar-thumb:hover{
+    background:#1b5e20;
+}

@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Something Went Wrong | Smart Plant Care</title>
+
+    <link rel="icon" href="{% static 'images/logo.jpeg' %}" type="image/jpeg">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#eef7ee;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .box{
+            background:white;
+            padding:40px;
+            border-radius:15px;
+            text-align:center;
+            box-shadow:0 8px 20px rgba(0,0,0,.15);
+            max-width:500px;
+        }
+
+        img{
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            border:3px solid #2e7d32;
+            object-fit:cover;
+            margin-bottom:20px;
+        }
+
+        h1{
+            color:#2e7d32;
+            margin-bottom:10px;
+            font-size:36px;
+        }
+
+        p{
+            color:#666;
+            line-height:1.6;
+            margin-bottom:25px;
+        }
+
+        a{
+            display:inline-block;
+            text-decoration:none;
+            background:#2e7d32;
+            color:white;
+            padding:12px 25px;
+            border-radius:8px;
+            font-weight:bold;
+        }
+
+        a:hover{
+            background:#256628;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <img src="{% static 'images/logo.jpeg' %}" alt="Logo">
+
+    <h1>Oops!</h1>
+
+    <p>
+        Something went wrong on our side.<br>
+        Please try again in a few moments.
+    </p>
+
+    <a href="{% url 'home' %}">
+        🏠 Back to Home
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Plants</title>
+    <link rel="stylesheet" href="{% static 'css/favorite_plants.css' %}">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>❤️ Favorite Plants</h1>
+        
+        <p class="subtitle">Your favorite plants will appear here.</p>
+        <div class="dashboard-btn-container">
+    <a href="{% url 'dashboard' %}" class="dashboard-btn">
+        <i class="fas fa-home"></i> ← Back to Dashboard
+    </a>
+</div>
+
+{% if favorite_plants %}
+
+<div class="plant-container">
+
+    {% for item in favorite_plants %}
+
+    <div class="plant-card">
+
+        <div class="plant-info">
+
+            <h3>{{ item.plant.name }}</h3>
+
+            <p><strong>💧 Water:</strong> {{ item.plant.watering }}</p>
+
+<p><strong>☀️ Sunlight:</strong> {{ item.plant.sunlight }}</p>
+
+            <div class="button-group">
+
+    {% if item.plant.page %}
+    <a href="{% url item.plant.page %}">
+        <button>View Details</button>
+    </a>
+    {% endif %}
+
+    <a href="{% url 'delete_favorite_plant' item.plant.id %}"
+       onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+        <button class="remove-btn">💔 Remove Favorite</button>
+    </a>
+
+</div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+    <div class="heart">🤍</div>
+    <h2>No Favorite Plants Yet</h2>
+    <p>Add your favorite plants to see them here.</p>
+</div>
+
+{% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

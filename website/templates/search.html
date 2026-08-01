@@ -1,0 +1,1101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Search</title>
+
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+</head>
+<body>
+
+<header>
+
+<h1><img src="{% static 'images/logo.jpeg' %}" class="page-logo" alt="Smart Plant Care Logo"> Smart Plant Care</h1>
+
+<p>Search any plant to know its care guide, diseases, watering schedule and more.</p>
+
+</header>
+
+<section class="search-box">
+
+<form method="POST">
+    {% csrf_token %}
+
+   <div class="search-wrapper">
+
+    <input type="text"
+           id="plant-search"
+           name="q"
+           placeholder="Search plant name..."
+           autocomplete="off"
+           required>
+
+    <div id="suggestions"></div>
+
+</div>
+
+    <button type="submit">🔍 Search</button>
+
+</form>
+
+</section>
+
+<section class="category">
+
+<h2>Popular Categories</h2>
+
+<div class="buttons">
+
+<button>Indoor Plants</button>
+
+<button>Outdoor Plants</button>
+
+<button>Medicinal Plants</button>
+
+<button>Flowering Plants</button>
+
+<button>Fruit Plants</button>
+
+<button>Vegetables</button>
+
+</div>
+
+</section>
+
+<section class="results">
+
+<h2>Search Results</h2>
+{% if message %}
+
+<p class="not-found" id="search-message">
+    {{ message }}
+</p>
+
+{% endif %}
+
+{% if plant and plant.page == "aloe_vera" %}
+<div class="card">
+    
+    
+<h3>🌱 Aloe Vera</h3>
+
+<p><strong>Water:</strong> Every 7-10 days</p>
+
+<p><strong>Sunlight:</strong> Bright indirect sunlight</p>
+
+<p><strong>Benefits:</strong> Medicinal plant used for skin care.</p>
+
+
+<a href="{% url 'aloe_vera' %}">
+<button>View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "tulasi" %}
+<div class="card">
+
+<h3>🌿 Tulsi</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+
+<a href="{% url 'tulasi' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "hibiscus" %}
+<div class="card">
+
+<h3>🌿 Hibiscus</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'hibiscus' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "mango_plant" %}
+<div class="card">
+
+<h3>🌿 Mango Plant</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'mango_plant' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "rose" %}
+<div class="card">
+
+<h3>🌿 rose</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'rose' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "turmeric" %}
+<div class="card">
+
+<h3>🌿 turmeric</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'turmeric' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "lemon" %}
+<div class="card">
+
+<h3>🌿 Lemon</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'lemon' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "snake_plant" %}
+<div class="card">
+
+<h3>🌿 Snake Plant</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'snake_plant' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "sunflower" %}
+<div class="card">
+
+<h3>🌿 Sunflower</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'sunflower' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "money_plant" %}
+<div class="card">
+
+<h3>🌿 Money Plant</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'money_plant' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "lotus" %}
+<div class="card">
+
+<h3>🌿 Lotus</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'lotus' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "watermelon" %}
+<div class="card">
+
+<h3>🌿 Watermelon</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'watermelon' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "rice" %}
+<div class="card">
+
+<h3>🌿 Rice</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'rice' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "wheat" %}
+<div class="card">
+
+<h3>🌿 Wheat</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'wheat' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "coconut" %}
+<div class="card">
+
+<h3>🌿 Coconut</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'coconut' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "brinjal" %}
+<div class="card">
+
+<h3>🌿 Brinjal</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'brinjal' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "neem" %}
+<div class="card">
+
+<h3>🌿 Neem</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'neem' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "mint" %}
+<div class="card">
+
+<h3>🌿 Mint</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'mint' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "jasmine" %}
+<div class="card">
+
+<h3>🌿 Jasmine</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'jasmine' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% if plant and plant.page == "lucky_bamboo" %}
+<div class="card">
+
+<h3>🌿 Lucky Bamboo</h3>
+
+<p><strong>Water:</strong> Daily (Summer)</p>
+
+<p><strong>Sunlight:</strong> 5-6 hours</p>
+
+<p><strong>Benefits:</strong> Improves immunity.</p>
+<a href="{% url 'lucky_bamboo' %}">
+<button> View Details</button>
+</a>
+
+{% if plant.id in added_plant_ids %}
+
+<a href="{% url 'delete_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to delete this plant?')">
+    <button class="delete-btn">🗑 Delete Plant</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_myplant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant?')">
+    <button class="add-plant-btn">🌱 Add Plant</button>
+</a>
+
+{% endif %}
+{% if plant.id in favorite_plant_ids %}
+
+<a href="{% url 'delete_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to remove this plant from Favorites?')">
+    <button class="delete-btn">💔 Remove Favorite</button>
+</a>
+
+{% else %}
+
+<a href="{% url 'add_favorite_plant' plant.id %}"
+   onclick="return confirm('Are you sure you want to add this plant to Favorites?')">
+    <button class="add-plant-btn">❤️ Favorite</button>
+</a>
+
+{% endif %}
+</div>
+{% endif %}
+
+</section>
+<script>
+const msg = document.getElementById("search-message");
+
+if (msg && msg.innerText.includes("Please login")) {
+
+    setTimeout(function () {
+        msg.innerText = "🌱 Search a plant to see information.";
+    }, 60000);
+
+}
+</script>
+<script>
+const searchInput = document.getElementById("plant-search");
+const suggestionsBox = document.getElementById("suggestions");
+
+let plants = [];
+
+fetch("/plant-suggestions/")
+    .then(response => response.json())
+    .then(data => {
+        plants = data;
+    });
+
+searchInput.addEventListener("focus", function () {
+    showSuggestions(plants);
+});
+
+searchInput.addEventListener("input", function () {
+    const value = this.value.toLowerCase();
+
+    const filtered = plants.filter(plant =>
+        plant.toLowerCase().includes(value)
+    );
+
+    showSuggestions(filtered);
+});
+
+function showSuggestions(list) {
+
+    suggestionsBox.innerHTML = "";
+
+    if (list.length === 0) {
+        suggestionsBox.style.display = "none";
+        return;
+    }
+
+    suggestionsBox.style.display = "block";
+
+    list.forEach(function (plant) {
+
+        const div = document.createElement("div");
+        div.textContent = plant;
+
+        div.onclick = function () {
+            searchInput.value = plant;
+            suggestionsBox.style.display = "none";
+        };
+
+        suggestionsBox.appendChild(div);
+
+    });
+
+}
+
+document.addEventListener("click", function(e){
+
+    if(!searchInput.contains(e.target) &&
+       !suggestionsBox.contains(e.target)){
+
+        suggestionsBox.style.display = "none";
+
+    }
+
+});
+</script>
+</body>
+</html>

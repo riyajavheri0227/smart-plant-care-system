@@ -1,0 +1,655 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Plant Care System</title>
+
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+</head>
+
+
+<body>
+
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+
+<div class="logo">
+
+    <img src="{% static 'images/logo.jpeg' %}"
+         alt="Smart Plant Care Logo"
+         class="logo-img">
+
+    <h2>Smart Plant Care</h2>
+
+</div>
+
+
+
+<div class="menu">
+
+
+<a class="active">
+<i class="fas fa-home"></i>
+Dashboard
+</a>
+
+
+<a href="{% url 'search' %}">
+<i class="fas fa-search"></i>
+Search
+</a>
+
+
+<a  href="{% url 'aiscan' %}">
+<i class="fas fa-robot"></i>
+AI Scan
+</a>
+
+
+<a href="{% url 'addplant' %}">
+    <i class="fas fa-plus"></i>
+    Add Plants
+</a>
+
+
+<a href="{% url 'favorite_plants' %}">
+    <i class="fas fa-heart"></i>
+    Favourite
+</a>
+
+
+<a  href="{% url 'watering' %}">
+<i class="fas fa-tint"></i>
+Watering
+</a>
+
+
+<a href="{% url 'schedule' %}">
+<i class="fas fa-calendar"></i>
+Schedule
+</a>
+
+
+
+<!-- Logout -->
+
+<a href="#" class="logout" 
+onclick="showLogoutPopup()">
+
+<i class="fas fa-sign-out-alt"></i>
+Logout
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- Main -->
+
+<div class="main">
+
+
+
+<!-- Header -->
+
+
+<div class="header">
+
+
+<h1>
+Welcome, {{ username }} 🌿
+</h1>
+
+
+
+<div class="header-right">
+
+
+
+<a href="{% url 'home' %}" class="btn">
+    Home
+</a>
+
+
+
+
+<a href="{% url 'profile' %}" class="profile">
+
+    {% if user.profile_photo %}
+        <img src="{{ user.profile_photo.url }}" class="profile-img" alt="Profile">
+    {% else %}
+        <i class="fas fa-user"></i>
+    {% endif %}
+
+    <div class="profile-info">
+
+        <h4>{{ user.name }}</h4>
+
+        <p>{{ user.status }}</p>
+
+    </div>
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="dashboard">
+
+
+
+
+
+<!-- Cards -->
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<i class="fas fa-leaf"></i>
+
+<h2>{{ myplants|length }}</h2>
+
+<p>My Plants</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<i class="fas fa-camera"></i>
+
+<h2>{{ ai_scan_count }}</h2>
+
+<p>AI Scans</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<i class="fas fa-heart"></i>
+
+<h2>{{ favourite_count }}</h2>
+
+<p>Favourite</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<i class="fas fa-calendar-check"></i>
+
+<h2>{{ upcoming_care_count }}</h2>
+
+<p>Upcoming Care</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Plant and Schedule -->
+
+<div class="content">
+
+
+
+<div class="box">
+
+
+<h3>
+My Plants 🌱
+</h3>
+
+<div class="table-container">
+
+<table>
+
+
+
+<table>
+
+
+<tr>
+
+<th>Plant Name</th>
+
+<th>Status</th>
+
+<th>Care</th>
+
+</tr>
+
+
+
+{% if myplants %}
+
+    {% for item in myplants %}
+
+    <tr>
+
+        <td>{{ item.plant.name }}</td>
+
+        <td>
+            <span class="empty">
+                Healthy
+            </span>
+        </td>
+
+        <td>{{ item.plant.watering }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+{% else %}
+
+    <tr>
+
+        <td>No plants added</td>
+
+        <td>
+            <span class="empty">
+                Add your first plant
+            </span>
+        </td>
+
+        <td>-</td>
+
+    </tr>
+
+{% endif %}
+
+
+</table>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+Upcoming Care 📅
+</h3>
+
+
+
+<div class="schedule">
+
+    💧 Watering Reminder - {{ watering_count }}
+
+</div>
+
+<div class="schedule">
+
+    🪴 Schedule Reminder - {{ schedule_count }}
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Quick Actions -->
+
+
+<div class="box">
+
+
+<h3>
+Quick Actions
+</h3>
+
+
+
+
+
+<div class="actions">
+
+    <a href="{% url 'search' %}" class="action-btn">
+        <i class="fas fa-search"></i>
+        <span>Search Plant</span>
+    </a>
+
+    <a href="{% url 'aiscan' %}" class="action-btn">
+        <i class="fas fa-robot"></i>
+        <span>AI Scan</span>
+    </a>
+
+    <a href="{% url 'addplant' %}" class="action-btn">
+        <i class="fas fa-plus"></i>
+        <span>Add Plant</span>
+    </a>
+
+
+    <button onclick="showNotificationPopup()" class="action-btn">
+    <i class="fas fa-bell"></i>
+    <span>Enable Notification</span>
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+<!-- Logout Popup -->
+
+<div id="logoutPopup" class="popup">
+
+    <div class="popup-box">
+
+        <h3>Logout</h3>
+
+        <p>Are you sure you want to logout?</p>
+
+        <div class="popup-buttons">
+
+            <button class="cancel-btn"
+                    onclick="hideLogoutPopup()">
+                Cancel
+            </button>
+
+            <a href="{% url 'logout' %}">
+                <button class="logout-btn">
+                    Logout
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Notification Popup -->
+
+<div id="notificationPopup" class="popup">
+
+    <div class="popup-box">
+
+        <h3>🌿 Enable Reminder Notifications</h3>
+
+        <p>
+            Allow notifications so you'll receive watering
+            and schedule reminders on time.
+        </p>
+
+        <div class="popup-buttons">
+
+            <button class="cancel-btn"
+                    onclick="hideNotificationPopup()">
+                Cancel
+            </button>
+
+            <button class="logout-btn"
+                    onclick="continueNotification()">
+                Continue
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+function showLogoutPopup(){
+    document.getElementById("logoutPopup").style.display="flex";
+}
+
+function hideLogoutPopup(){
+    document.getElementById("logoutPopup").style.display="none";
+}
+
+</script>
+<script>
+if ("serviceWorker" in navigator && "PushManager" in window) {
+
+    navigator.serviceWorker.register('/serviceworker.js')
+.then(function(registration){
+    console.log("Service Worker registered", registration);
+})
+.catch(function(error){
+    console.error("Service Worker Error: ", error);
+});
+
+}
+</script>
+
+<script>
+
+
+function urlBase64ToUint8Array(base64String) {
+
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+
+    return Uint8Array.from(
+        [...rawData].map(char => char.charCodeAt(0))
+    );
+}
+function showNotificationPopup(){
+    document.getElementById("notificationPopup").style.display = "flex";
+}
+
+function hideNotificationPopup(){
+    document.getElementById("notificationPopup").style.display = "none";
+}
+
+function continueNotification(){
+
+    console.log("Continue button clicked");
+
+    hideNotificationPopup();
+
+    enableNotifications();
+
+}
+function enableNotifications(){
+
+    console.log("Button clicked");
+
+    if (!("Notification" in window)){
+        alert("Notifications are not supported");
+        return;
+    }
+
+
+    Notification.requestPermission().then(function(permission){
+
+    console.log("Permission:", permission);
+
+
+    if(permission === "granted"){
+
+            navigator.serviceWorker.ready.then(function(registration){
+
+    console.log("Service worker ready");
+    registration.pushManager.getSubscription()
+.then(function(subscription){
+
+    if(subscription){
+        return subscription;
+    }
+
+    return
+    registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array('BIjx8Ee8-MfhYqGdZILwIQTBDHDEjLrMc8_9dGiysf6GTwgc0JEMSs4NifAdB3mBXN_vbwHCyjr7A2oyqPSQfu4')
+    });
+})
+    .then(function(subscription){
+
+        console.log("Subscription created", subscription);
+
+        fetch("/save-subscription/", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(subscription)
+        })
+        .then(response => {
+            console.log("Subscription saved");
+        });
+
+    })
+    .catch(function(error){
+    console.error(error);
+    console.error(error);
+});
+});
+
+        }
+        else{
+
+            alert("Notification permission denied");
+
+        }
+
+    });
+
+}
+
+</script>
+{% if missed_reminders %}
+
+<div id="missedReminderPopup" class="popup">
+
+    <div class="popup-box">
+
+        <h3>🌿 Welcome Back!</h3>
+
+        <p>You have some missed reminders.</p>
+
+        <ul style="text-align:left; margin:15px 0;">
+
+           {% for msg in missed_reminders %}
+              <li>{{ msg.message }}</li>
+           {% endfor %}
+
+        </ul>
+
+        <div class="popup-buttons">
+
+            <a href="{% url 'mark_missed_reminder_seen' %}">
+               <button class="logout-btn">
+                  OK
+               </button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+window.onload = function(){
+
+    document.getElementById("missedReminderPopup").style.display = "flex";
+
+}
+
+function closeMissedReminderPopup(){
+
+    document.getElementById("missedReminderPopup").style.display = "none";
+
+}
+
+</script>
+
+{% endif %}
+</body>
+
+</html>

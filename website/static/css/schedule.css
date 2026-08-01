@@ -1,0 +1,162 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#eef7ee;
+}
+
+header{
+    background:#2e7d32;
+    color:white;
+    text-align:center;
+    padding:40px;
+}
+
+header h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.container{
+    width:90%;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.form-box,
+.list-box{
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+
+    height: 700px;
+    overflow-y: auto;
+}
+
+.form-box h2,
+.list-box h2{
+    color:#2e7d32;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.schedule-card{
+    border-left:5px solid #2e7d32;
+    background:#f8fff8;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:8px;
+}
+
+.schedule-card h3{
+    color:#2e7d32;
+    margin-bottom:10px;
+}
+
+.buttons{
+    margin-top:15px;
+}
+
+.buttons a{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    padding:8px 14px;
+    border-radius:6px;
+    margin-right:8px;
+}
+
+.edit-btn{
+    background:#ff9800;
+}
+
+.delete-btn{
+    background:#e53935;
+}
+
+.watered-btn{
+    background:#2e7d32;
+}
+
+.watered-btn:hover{
+    background:#1b5e20;
+}
+
+.empty-box{
+    text-align:center;
+    padding:40px;
+    color:#666;
+}
+
+.dashboard-btn{
+    display:inline-block;
+    background:#2e7d32;
+    color:white;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:8px;
+    margin-bottom:30px;
+}
+
+.dashboard-btn:hover{
+    background:#1b5e20;
+}
+
+@media(max-width:768px){
+
+.container{
+    grid-template-columns:1fr;
+}
+
+}
+
+.list-box::-webkit-scrollbar{
+    width:8px;
+}
+
+.list-box::-webkit-scrollbar-track{
+    background:#e8f5e9;
+    border-radius:10px;
+}
+
+.list-box::-webkit-scrollbar-thumb{
+    background:#2e7d32;
+    border-radius:10px;
+}
+
+.list-box::-webkit-scrollbar-thumb:hover{
+    background:#1b5e20;
+}

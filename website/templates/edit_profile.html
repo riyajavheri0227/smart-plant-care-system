@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+
+    <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="edit-card">
+
+        <div class="profile-image" id="profilePreview">
+
+    {% if user.profile_photo %}
+        <img id="previewImage" src="{{ user.profile_photo.url }}" alt="Profile Photo">
+    {% else %}
+        <i id="defaultIcon" class="fas fa-user"></i>
+        <img id="previewImage" style="display:none;">
+    {% endif %}
+
+</div>
+
+        <h2>Edit Profile</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+            <label>Name</label>
+            <input type="text" name="name" value="{{ user.name }}">
+
+            <label>Status</label>
+
+<input
+type="text"
+name="status"
+id="statusInput"
+list="statusSuggestions"
+value="{{ user.status }}">
+
+<datalist id="statusSuggestions">
+
+    <option value="Plant Lover">
+
+    <option value="Plant Protector">
+
+    <option value="Green Guardian">
+
+    <option value="Nature Explorer">
+
+    <option value="Garden Enthusiast">
+
+    <option value="Plant Collector">
+
+</datalist>
+
+            <label class="photo-btn">
+    Change Photo
+    <input type="file" name="profile_photo" accept="image/*" hidden>
+</label>
+
+            <button type="button" onclick="showDeletePopup()">
+    Delete Photo
+</button>
+
+            <button type="submit">Save Changes</button>
+
+        </form>
+
+        <br>
+
+        <a href="{% url 'profile' %}">← Back to Profile</a>
+
+    </div>
+
+</div>
+
+
+<!-- Delete Photo Popup -->
+
+<div id="deletePopup" class="popup">
+
+    <div class="popup-box">
+
+        <h3>Delete Profile Photo</h3>
+
+        <p>Are you sure you want to delete your profile photo?</p>
+
+        <div class="popup-buttons">
+
+            <button type="button"
+                    class="cancel-btn"
+                    onclick="hideDeletePopup()">
+                Cancel
+            </button>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="delete-btn"
+                        name="delete_photo"
+                        value="1">
+
+                    Delete
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const photoInput = document.querySelector(
+'input[name="profile_photo"]'
+);
+
+const previewImage = document.getElementById(
+'previewImage'
+);
+
+const defaultIcon = document.getElementById(
+'defaultIcon'
+);
+
+photoInput.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(file){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+
+            if(defaultIcon){
+                defaultIcon.style.display = "none";
+            }
+
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+});
+function showDeletePopup(){
+    document.getElementById("deletePopup").style.display="flex";
+}
+
+function hideDeletePopup(){
+    document.getElementById("deletePopup").style.display="none";
+}
+
+</script>
+
+</body>
+
+</html>

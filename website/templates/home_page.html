@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Plant Care</title>
+
+
+<link rel="stylesheet" href="{% static 'css/home_page.css' %}">
+</head>
+<body>
+<nav>
+<h2><img src="{% static 'images/logo.jpeg' %}" class="page-logo" alt="Smart Plant Care Logo"> Smart Plant Care</h2>
+<div>
+<a href="/search/">Search</a><a href="/aiscan/">AI Scan</a>
+<a href="/about/">About</a><a href="/contact/">Contact</a>
+<a class="btn" href="/login/">Login</a>
+<a class="btn" href="/register/">Register</a>
+</div>
+</nav>
+
+<section class="hero">
+<div>
+<h1>Smart Plant Care System</h1>
+<p>Identify plant , search plant information and keep your plants healthy with smart reminders.</p>
+<a class="btn" href="/register/">Get Started</a>
+</div>
+</section>
+
+<section class="cards">
+<div class="card"><h3>🌱 Plant Search</h3><p>Find plant information quickly.</p></div>
+<div class="card"><h3>📷 AI Scan</h3><p>Upload a leaf photo for detection.</p></div>
+<div class="card"><h3>💧 Reminders</h3><p>Never miss watering schedules.</p></div>
+<div class="card"><h3>📚 Library</h3><p>Learn plant care and benefits.</p></div>
+</section>
+
+<section class="stats">
+<div><h2>Plant Database</h2></div>
+<div><h2>AI Plant Identification</h2></div>
+<div><h2>Plant Care Support</h2></div>
+</section>
+
+<footer>
+<h3>Smart Plant Care </h3>
+<p>Email: riyajavheri12@email.com</p>
+<p>© 2026 All Rights Reserved</p>
+</footer>
+</body>
+</html>

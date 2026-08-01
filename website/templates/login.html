@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Plant Care - Login</title>
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="left">
+        {% load static %}
+
+<img src="{% static 'images/logo.jpeg' %}"
+     alt="Smart Plant Care Logo"
+     class="login-logo">
+        <h1>🌿 Smart Plant Care System</h1>
+        <p>AI-powered plant disease detection, plant care guidance and smart reminders.</p>
+        <div class="plant">🪴</div>
+    </div>
+
+    <div class="right">
+
+        <h2>Login to Your Account</h2>
+
+        {% if error %}
+        <p style="color:red;
+    margin-bottom:15px;">{{error}}</p>
+    {% endif %}
+    {% if success %}
+<p style="color:green; text-align:center;">
+    {{ success }}
+</p>
+{% endif %}
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="email"
+                   name="email"
+                   placeholder="Email Address"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Password"
+                   required>
+
+            <div class="link">
+                <a href="{% url 'forgot_password' %}"  class="forgot-link">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <div class="small">
+            Don't have an account?
+            <a href="{% url 'register' %}">Register</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
