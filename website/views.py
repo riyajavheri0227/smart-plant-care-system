@@ -246,20 +246,20 @@ def ai_scan_page(request):
                     "limit_reached": True
                 })
 
-        request.session["guest_scan_count"] = guest_scan_count + 1
-        request.session["guest_scan_time"] = timezone.now().isoformat()
-        if "username" in request.session:
+            request.session["guest_scan_count"] = guest_scan_count + 1
+            request.session["guest_scan_time"] = timezone.now().isoformat()
+            if "username" in request.session:
 
-           user = User.objects.get(name=request.session["username"])
+             user = User.objects.get(name=request.session["username"])
 
-           today = timezone.now().date()
+             today = timezone.now().date()
 
-           if user.ai_scan_date != today:
+            if user.ai_scan_date != today:
                user.ai_scan_date = today
                user.ai_scan_count = 0
                user.save()
 
-           if user.ai_scan_count >= 20:
+            if user.ai_scan_count >= 20:
              return render(request, "aiscan.html", {
              "daily_limit_reached": True
           })
