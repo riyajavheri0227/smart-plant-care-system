@@ -561,8 +561,7 @@ function enableNotifications(){
         return subscription;
     }
 
-    return
-    registration.pushManager.subscribe({
+    return registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array('BIjx8Ee8-MfhYqGdZILwIQTBDHDEjLrMc8_9dGiysf6GTwgc0JEMSs4NifAdB3mBXN_vbwHCyjr7A2oyqPSQfu4')
     });
@@ -576,7 +575,7 @@ function enableNotifications(){
             headers:{
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify(subscription)
+            body: JSON.stringify(subscription.toJSON())
         })
         .then(response => {
             console.log("Subscription saved");
